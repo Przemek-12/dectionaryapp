@@ -1,11 +1,34 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+#  datasource:
+#    url: jdbc:h2:file:/data/dict
+#    username: sa
+#    password: password
+#    driverClassName: org.h2.Driver
+#  jpa:
+#    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+#    defer-datasource-initialization: true
+#    generate-ddl: true
+#    hibernate:
+#      ddl-auto: update
+
+
   datasource:
-    url: jdbc:h2:file:/data/dict
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dict_app?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
     generate-ddl: true
     hibernate:
       ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
