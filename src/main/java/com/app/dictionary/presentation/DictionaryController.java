@@ -1,44 +1,42 @@
 package com.app.dictionary.presentation;
 
-import com.app.dictionary.application.WordService;
+import com.app.dictionary.application.word.WordReadService;
 import com.app.dictionary.application.dto.AddWordRequest;
 import com.app.dictionary.application.dto.DictionaryListResponse;
 import com.app.dictionary.application.dto.TranslationRequest;
 import com.app.dictionary.application.dto.WordGetDTO;
+import com.app.dictionary.application.word.WordTranslationService;
+import com.app.dictionary.application.word.WordWriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("/dictionary")
 @RestController
 @RequiredArgsConstructor
 public class DictionaryController {
 
-    private final WordService wordService;
-
-    @GetMapping("/translate")
-    public WordGetDTO translate(@RequestParam String fromLang, @RequestParam String toLang,
-                                @RequestParam String wordValue) {
-        return wordService.translateWord(TranslationRequest.builder()
-                        .fromLang(fromLang)
-                        .toLang(toLang)
-                        .wordValue(wordValue)
-                .build());
-    }
-//
-//    public Object translateSentence() {
-//
-//    }
+    private final WordWriteService wordWriteService;
+    private final WordReadService wordReadService;
+    private final WordTranslationService wordTranslationService;
 
     @PostMapping("/word")
     public void addWord(@RequestBody AddWordRequest addWordRequest) {
-        wordService.addWords(addWordRequest);
+        wordWriteService.addWords(addWordRequest);
+    }
+
+    @PostMapping("/translate/word")
+    public WordGetDTO translate(@RequestBody TranslationRequest translationRequest) {
+        return wordTranslationService.translateWord(translationRequest);
+    }
+
+    @PostMapping("/translate/sentence")
+    public Object translateSentence(@RequestBody TranslationRequest translationRequest) {
+        return wordTranslationService.translateSentence(translationRequest);
     }
 
     @GetMapping("/all")
     public DictionaryListResponse getAll() {
-        return wordService.getAll();
+        return wordReadService.getAll();
     }
 //
 //    public Object getReport() {
@@ -48,8 +46,6 @@ public class DictionaryController {
 //    public Object getReportAsPDF() {
 //
 //    }
-
-
 
 
 }

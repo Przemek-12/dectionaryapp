@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
-//        indexes = {
-//                @Index(columnList = "value"),
-//                @Index(name = "words_langs", columnList = "sharedUUID, language")
-//        },
+        indexes = {
+                @Index(columnList = "value"),
+                @Index(name = "words_langs", columnList = "sharedUUID, language")
+        },
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"language", "value"}),
                 @UniqueConstraint(columnNames = {"sharedUUID", "language", "value"})

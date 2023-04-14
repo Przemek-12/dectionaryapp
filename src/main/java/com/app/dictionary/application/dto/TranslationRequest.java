@@ -13,6 +13,6 @@ public class TranslationRequest {
 
     private String fromLang;
     private String toLang;
-    private String wordValue;
+    private String value;
 
 }

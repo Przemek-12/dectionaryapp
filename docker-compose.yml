@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  mariadb:
+    restart: always
+    image: mariadb:10.7
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb-volume2:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dict_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+volumes:
+  mariadb-volume2:
