@@ -1,33 +1,19 @@
 package com.app.dictionary.application.report;
 
 import com.app.dictionary.application.dto.DictionaryListResponse;
-import com.app.dictionary.application.dto.FileType;
+import com.app.dictionary.application.dto.FileFormat;
 import com.app.dictionary.application.dto.Report;
-import com.app.dictionary.application.report.reportfilegenerator.ReportFileGenerator;
 import com.app.dictionary.application.report.reportfilegenerator.ReportFileGeneratorFactory;
 import com.app.dictionary.application.word.WordReadService;
 import com.app.dictionary.domain.entity.Language;
 import com.app.dictionary.domain.repository.PendingWordRepository;
-import com.app.dictionary.domain.repository.WordRepository;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -57,8 +43,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Resource generateReportAsFile(FileType fileType) {
-        return reportFileGeneratorFactory.getReportFileGenerator(fileType).generateReport(generateReport());
+    public Resource generateReportAsFile(FileFormat fileFormat) {
+        return reportFileGeneratorFactory.getReportFileGenerator(fileFormat).generateReport(generateReport());
     }
 
     private Map<String, Map<Integer, Integer>> getWordsByLengthByLangs() {

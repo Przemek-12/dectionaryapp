@@ -2,17 +2,14 @@ package com.app.dictionary.presentation;
 
 import com.app.dictionary.application.dto.*;
 import com.app.dictionary.application.report.ReportService;
-import com.app.dictionary.application.report.reportfilegenerator.ReportFileGenerator;
 import com.app.dictionary.application.word.WordReadService;
 import com.app.dictionary.application.word.WordTranslationService;
 import com.app.dictionary.application.word.WordWriteService;
-import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @RequestMapping("/dictionary")
@@ -51,8 +48,8 @@ public class DictionaryController {
     }
 
     @GetMapping("/report/pdf")
-    public ResponseEntity<Resource> getReportAsPDF(@RequestParam FileType fileType) {
-        Resource resource = reportService.generateReportAsFile(fileType);
+    public ResponseEntity<Resource> getReportAsPDF(@RequestParam FileFormat fileFormat) {
+        Resource resource = reportService.generateReportAsFile(fileFormat);
         MediaType mediaType = MediaTypeFactory
                 .getMediaType(resource)
                 .orElse(MediaType.APPLICATION_OCTET_STREAM);

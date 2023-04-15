@@ -1,6 +1,6 @@
 package com.app.dictionary.application.report.reportfilegenerator;
 
-import com.app.dictionary.application.dto.FileType;
+import com.app.dictionary.application.dto.FileFormat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,21 +11,21 @@ import java.util.EnumMap;
 @RequiredArgsConstructor
 public class ReportFileGeneratorFactory {
 
-    private static final EnumMap<FileType, ReportFileGenerator> reportGeneratorsByTypes =
-            new EnumMap<>(FileType.class);
+    private static final EnumMap<FileFormat, ReportFileGenerator> reportGeneratorsByTypes =
+            new EnumMap<>(FileFormat.class);
 
     private final ReportFileGenerator pdfReportFileGenerator;
 
     @PostConstruct
     protected void init() {
-        reportGeneratorsByTypes.put(FileType.PDF, pdfReportFileGenerator);
+        reportGeneratorsByTypes.put(FileFormat.PDF, pdfReportFileGenerator);
     }
 
-    public ReportFileGenerator getReportFileGenerator(FileType fileType) {
-        if (!reportGeneratorsByTypes.containsKey(fileType)) {
-            throw new UnsupportedOperationException(String.format("Unsupported file type: %s", fileType));
+    public ReportFileGenerator getReportFileGenerator(FileFormat fileFormat) {
+        if (!reportGeneratorsByTypes.containsKey(fileFormat)) {
+            throw new UnsupportedOperationException(String.format("Unsupported file type: %s", fileFormat));
         }
-        return reportGeneratorsByTypes.get(fileType);
+        return reportGeneratorsByTypes.get(fileFormat);
     }
 
 }

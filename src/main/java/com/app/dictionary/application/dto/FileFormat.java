@@ -1,5 +1,5 @@
 package com.app.dictionary.application.dto;
 
-public enum FileType {
+public enum FileFormat {
     PDF
 }

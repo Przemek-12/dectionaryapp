@@ -1,7 +1,6 @@
 package com.app.dictionary.application.report.reportfilegenerator;
 
-import com.app.dictionary.application.dto.FileType;
-import org.junit.jupiter.api.BeforeAll;
+import com.app.dictionary.application.dto.FileFormat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ class ReportFileGeneratorFactoryTest {
 
     @Test
     void shouldGetReportFileGenerator() {
-        assertEquals(pdfReportFileGenerator, reportFileGeneratorFactory.getReportFileGenerator(FileType.PDF));
+        assertEquals(pdfReportFileGenerator, reportFileGeneratorFactory.getReportFileGenerator(FileFormat.PDF));
     }
 
 }
