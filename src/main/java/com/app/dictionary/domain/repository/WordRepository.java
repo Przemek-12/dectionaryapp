@@ -11,7 +11,8 @@ public interface WordRepository {
 
     Word save(Word word);
     List<Word> findBySharedUUIDIn(List<UUID> uuids);
-    List<UUID> getDistinctUUIDs();
+    List<UUID> getDistinctUUIDs(int limit, int offset);
+    int countDistinctUUIDs();
     Optional<Word> findByLanguageAndValue(Language language, String value);
     Optional<Word> findByLanguageAndSharedUUID(Language language, UUID sharedUUID);
 }

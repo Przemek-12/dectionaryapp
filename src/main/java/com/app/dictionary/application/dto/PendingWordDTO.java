@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
+@EqualsAndHashCode
 public class PendingWordDTO {
 
     private String language;

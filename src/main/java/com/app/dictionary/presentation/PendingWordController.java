@@ -1,5 +1,6 @@
 package com.app.dictionary.presentation;
 
+import com.app.dictionary.application.dto.PendingWordAllResponse;
 import com.app.dictionary.application.dto.PendingWordDTO;
 import com.app.dictionary.application.pendingword.PendingWordReadService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class PendingWordController {
     private final PendingWordReadService pendingWordReadService;
 
     @GetMapping("/all")
-    public List<PendingWordDTO> getAll() {
+    public PendingWordAllResponse getAll() {
         return pendingWordReadService.findAll();
     }
 

@@ -2,6 +2,7 @@ package com.app.dictionary.application.word;
 
 import com.app.dictionary.application.dto.AddWordDTO;
 import com.app.dictionary.application.dto.AddWordRequest;
+import com.app.dictionary.application.pendingword.PendingWordWriteService;
 import com.app.dictionary.domain.entity.Language;
 import com.app.dictionary.domain.entity.Word;
 import com.app.dictionary.domain.repository.WordRepository;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class WordWriteServiceImpl implements WordWriteService {
 
     private final WordRepository wordRepository;
+    private final PendingWordWriteService pendingWordWriteService;
 
     @Transactional
     @Override
@@ -46,6 +48,7 @@ public class WordWriteServiceImpl implements WordWriteService {
 
     private void addWord(AddWordDTO addWordDTO, UUID sharedUUID) {
         Language language = WordUtils.toLanguage(addWordDTO.getLanguage());
+        pendingWordWriteService.deletePendingWordIfExists(language, addWordDTO.getValue());
         wordRepository.save(Word.create(sharedUUID, language, addWordDTO.getValue()));
     }
 

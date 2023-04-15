@@ -9,11 +9,13 @@ import java.util.UUID;
 
 public interface WordReadService {
 
-    DictionaryListResponse getAll();
+    DictionaryListResponse getAll(int itemsPerPage, int page);
 
     Word findWordByLanguageAndValueOrElseThrowException(Language language, String value);
 
     Word findWordByLanguageAndSharedUUIDOrElseThrowException(Language language, UUID uuid);
 
     Optional<Word> findWordByLanguageAndValueOpt(Language language, String value);
+
+    int getAllWordsCount();
 }

@@ -1,9 +1,6 @@
 package com.app.dictionary.application.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -11,6 +8,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Builder
+@ToString
+@EqualsAndHashCode
 public class WordGetDTO {
 
     private Long id;

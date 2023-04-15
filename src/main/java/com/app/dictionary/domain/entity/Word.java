@@ -9,13 +9,15 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
+        name = "word",
         indexes = {
-                @Index(columnList = "value"),
-                @Index(name = "words_langs", columnList = "sharedUUID, language")
+                @Index(columnList = "shared_uuid"),
+                @Index(columnList = "language, value"),
+                @Index(name = "words_langs", columnList = "language, shared_uuid")
         },
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"language", "value"}),
-                @UniqueConstraint(columnNames = {"sharedUUID", "language", "value"})
+                @UniqueConstraint(columnNames = {"shared_uuid", "language", "value"})
         })
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
@@ -28,7 +30,7 @@ public class Word {
 
     @NonNull
     @NotNull
-    @Column(length = 36)
+    @Column(name = "shared_uuid", length = 36)
     @Getter
     @Type(type="org.hibernate.type.UUIDCharType")
     private UUID sharedUUID;

@@ -35,33 +35,29 @@ public class WordTranslationServiceImpl implements WordTranslationService {
 
     @Override
     public String translateSentence(TranslationRequest translationRequest) {
-
         String sentence = translationRequest.getValue();
-
         Set<String> wordsInSentence = Arrays.stream(translationRequest.getValue()
                 .split(REGEX_NOT_LETTERS)).collect(Collectors.toSet());
-
         Language fromLang = WordUtils.toLanguage(translationRequest.getFromLang());
         Language toLang = WordUtils.toLanguage(translationRequest.getToLang());
-
         for (String wordInSentence : wordsInSentence) {
-            Optional<Word> wordToTranslateOpt = wordReadService.findWordByLanguageAndValueOpt(fromLang, wordInSentence);
-
-            if (wordToTranslateOpt.isPresent()) {
-                Word translatedWord = wordReadService.findWordByLanguageAndSharedUUIDOrElseThrowException(toLang,
-                        wordToTranslateOpt.get().getSharedUUID());
-                sentence = sentence.replaceAll(
-                        WORD_MATCHER_CHAR + wordToTranslateOpt.get().getValue() + WORD_MATCHER_CHAR,
-                        translatedWord.getValue());
-            } else {
-                addWordAsPending(fromLang, wordInSentence);
-            }
-
-
+            sentence = translateSingleWordInSentence(sentence, fromLang, toLang, wordInSentence);
         }
         return sentence;
     }
 
+    private String translateSingleWordInSentence(String sentence, Language fromLang, Language toLang,
+                                                 String wordInSentence) {
+        Optional<Word> wordToTranslateOpt = wordReadService.findWordByLanguageAndValueOpt(fromLang, wordInSentence);
+        if (wordToTranslateOpt.isPresent()) {
+            Word translatedWord = wordReadService.findWordByLanguageAndSharedUUIDOrElseThrowException(toLang,
+                    wordToTranslateOpt.get().getSharedUUID());
+            String wordMatcherRegex = WORD_MATCHER_CHAR + wordToTranslateOpt.get().getValue() + WORD_MATCHER_CHAR;
+            return sentence.replaceAll(wordMatcherRegex, translatedWord.getValue());
+        }
+        addWordAsPending(fromLang, wordInSentence);
+        return sentence;
+    }
 
     private void addWordAsPending(Language lang, String word) {
         pendingWordWriteService.addPendingWord(lang, word);

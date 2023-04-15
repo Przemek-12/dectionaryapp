@@ -8,12 +8,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
 @EqualsAndHashCode
-public class DictionaryListResponse {
+public class PendingWordAllResponse {
 
-    private int itemsOnPage;
-    private int totalPages;
-    private List<List<WordGetDTO>> dictionary;
+    private List<PendingWordDTO> words;
 
 }

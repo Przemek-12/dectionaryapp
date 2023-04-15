@@ -1,15 +1,21 @@
 package com.app.dictionary.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(
+        name = "pending_word",
+        indexes = {
+                @Index(columnList = "language, value")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"language", "value"})
+        })
+@EqualsAndHashCode
 public class PendingWord {
 
     @Id

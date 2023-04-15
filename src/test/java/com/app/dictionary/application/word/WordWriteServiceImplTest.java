@@ -2,6 +2,8 @@ package com.app.dictionary.application.word;
 
 import com.app.dictionary.application.dto.AddWordDTO;
 import com.app.dictionary.application.dto.AddWordRequest;
+import com.app.dictionary.application.pendingword.PendingWordWriteService;
+import com.app.dictionary.domain.entity.Language;
 import com.app.dictionary.domain.entity.Word;
 import com.app.dictionary.domain.repository.WordRepository;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -25,6 +28,9 @@ class WordWriteServiceImplTest {
 
     @Mock
     private WordRepository wordRepository;
+
+    @Mock
+    private PendingWordWriteService pendingWordWriteService;
 
     @Test
     void shouldThrowExceptionWhenDuplicatesInRequest() {
@@ -45,7 +51,7 @@ class WordWriteServiceImplTest {
                 ))
                 .build();
 
-        assertThrows(IllegalArgumentException.class, ()-> wordWriteService.addWords(addWordRequest));
+        assertThrows(IllegalArgumentException.class, () -> wordWriteService.addWords(addWordRequest));
     }
 
     @Test
@@ -59,7 +65,7 @@ class WordWriteServiceImplTest {
                 ))
                 .build();
 
-        assertThrows(IllegalArgumentException.class, ()-> wordWriteService.addWords(addWordRequest));
+        assertThrows(IllegalArgumentException.class, () -> wordWriteService.addWords(addWordRequest));
     }
 
     @Test
@@ -81,7 +87,7 @@ class WordWriteServiceImplTest {
                 ))
                 .build();
 
-        assertThrows(IllegalArgumentException.class, ()-> wordWriteService.addWords(addWordRequest));
+        assertThrows(IllegalArgumentException.class, () -> wordWriteService.addWords(addWordRequest));
     }
 
     @Test
@@ -102,6 +108,8 @@ class WordWriteServiceImplTest {
         wordWriteService.addWords(addWordRequest);
 
         verify(wordRepository, times(2)).save(any(Word.class));
+        verify(pendingWordWriteService, times(2))
+                .deletePendingWordIfExists(any(Language.class), anyString());
     }
 
 }

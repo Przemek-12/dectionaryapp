@@ -1,5 +1,6 @@
 package com.app.dictionary.application.pendingword;
 
+import com.app.dictionary.application.dto.PendingWordAllResponse;
 import com.app.dictionary.application.dto.PendingWordDTO;
 import com.app.dictionary.domain.entity.PendingWord;
 import com.app.dictionary.domain.repository.PendingWordRepository;
@@ -15,8 +16,10 @@ public class PendingWordReadServiceImpl implements PendingWordReadService {
     private final PendingWordRepository pendingWordRepository;
 
     @Override
-    public List<PendingWordDTO> findAll() {
-        return pendingWordRepository.findAll().stream().map(this::mapToPendingWordDTO).toList();
+    public PendingWordAllResponse findAll() {
+        return PendingWordAllResponse.builder()
+                .words(pendingWordRepository.findAll().stream().map(this::mapToPendingWordDTO).toList())
+                .build();
     }
 
     private PendingWordDTO mapToPendingWordDTO(PendingWord pendingWord) {
