@@ -92,7 +92,7 @@ class WordTranslationServiceImplTest {
                         UUID uuid = DICTIONARY.get(lang)
                                 .entrySet()
                                 .stream()
-                                .filter(entry -> i.getArgument(1).equals(entry.getValue()))
+                                .filter(entry -> wordVal.equals(entry.getValue()))
                                 .map(Map.Entry::getKey)
                                 .findFirst()
                                 .get();
@@ -112,6 +112,8 @@ class WordTranslationServiceImplTest {
         String response = wordTranslationService.translateSentence(translationRequest);
 
         assertThat(response).isEqualTo(expectedTranslation);
+        verify(pendingWordWriteService, times(2))
+                .addPendingWord(any(), any());
         verify(pendingWordWriteService, times(1))
                 .addPendingWord(eq(Language.POLISH), argThat(arg -> arg.equals("wordaaaa")));
         verify(pendingWordWriteService, times(1))
