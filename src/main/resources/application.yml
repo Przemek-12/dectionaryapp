@@ -10,13 +10,13 @@ spring:
   jpa:
     show-sql: true
     defer-datasource-initialization: true
-    generate-ddl: true
-#    generate-ddl: false
+#    generate-ddl: true
+    generate-ddl: false
     hibernate:
-      ddl-auto: create
+#      ddl-auto: create
 #      ddl-auto: update
 #      ddl-auto: drop
-#      ddl-auto: none
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:

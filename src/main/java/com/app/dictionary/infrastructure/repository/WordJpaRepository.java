@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface WordJpaRepository extends WordRepository, JpaRepository<Word, Long> {
 
     @Query(
-            value = "SELECT DISTINCT shared_uuid FROM word limit ?1 offset ?2",
+            value = "SELECT DISTINCT shared_uuid FROM word order by id limit ?1 offset ?2",
             nativeQuery = true)
     List<UUID> getDistinctUUIDs(int limit, int offset);
 
